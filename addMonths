@@ -1,0 +1,49 @@
+ //metoda koja dodaje +6 mjeseci na traženi datum
+ 
+ 
+ public void addMonths () 
+                                                                 
+   {
+       
+           ViewObject priznanice = this.getPriznaniceVO1();
+                    
+           Row curMaster = priznanice.getCurrentRow();
+           String dat= curMaster.getAttribute("DatumZapovijedi").toString();
+           System.out.println(dat);
+           
+                 
+       String format ="yyyy-MM-dd";
+       SimpleDateFormat sdf = new SimpleDateFormat(format);
+       try {
+	   
+               Date dateAsObj = sdf.parse (dat);
+               System.out.println(dat);
+			   
+               Calendar cal = Calendar.getInstance();
+               cal.setTime(dateAsObj);
+               cal.add(Calendar.MONTH, 6);
+			   
+               Date dateAsObjAfterMonth = cal.getTime();
+			   
+               System.out.println(sdf.format(dateAsObjAfterMonth));
+               
+               String dt = sdf.format(dateAsObjAfterMonth);
+               
+               System.out.println(dt);
+               
+                   curMaster.setAttribute("DatumRokaVracanja", dt);
+                   curMaster.setAttribute("StanjePriznanice", "PREDANO");
+                          }
+       catch (Exception e){
+                              System.out.println(e);
+                              }
+       
+      
+           this.getDBTransaction().commit(); 
+           
+           
+      
+       
+       
+       
+       }
